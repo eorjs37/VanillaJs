@@ -1,7 +1,37 @@
 .container{
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
 
 }
 
 .card{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 
+.card-item{
+    padding: 50px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin: 10px 0;
+    opacity: 0;
+    transform: translateY(200px);
+    transition: 150ms ease-in-out all;
+}
+
+.card-item.visible{
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.card-item:nth-child(1){
+    margin-top: 0;
+}
+
+.card-item:last-child{
+    margin-bottom: 0;
 }
