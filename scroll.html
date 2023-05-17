@@ -9,45 +9,85 @@
   </head>
   <body>
     <div class="container">
-      <ul class="card">
-        <li class="card-item">리스트1</li>
-        <li class="card-item">리스트2</li>
-        <li class="card-item">리스트3</li>
-        <li class="card-item">리스트4</li>
-        <li class="card-item">리스트5</li>
-        <li class="card-item">리스트6</li>
-        <li class="card-item">리스트7</li>
-        <li class="card-item">리스트8</li>
-        <li class="card-item">리스트9</li>
-        <li class="card-item">리스트10</li>
-        <li class="card-item">리스트11</li>
-        <li class="card-item">리스트12</li>
-        <li class="card-item">리스트13</li>
-        <li class="card-item">리스트14</li>
-      </ul>
+      <ul class="card"></ul>
     </div>
 
     <script>
-      const $cardItem = document.querySelectorAll('.card-item');
+      let curPage = 1;
+      const $card = document.querySelector('.card');
+      const windowHeight = window.innerHeight;
 
-      const callback = entries => {
-        entries.forEach(entry => {
-          //화면에 보여지는 순간 visible class 추가
-          entry.target.classList.toggle('visible', entry.isIntersecting);
-          //화면에 보여지고 있는지 확인
-          if (entry.isIntersecting) {
-            //위로이동했을때 이벤트 동작하지 않도록 구독 해지
-            //화면에 현재 보여지고 있다면 구독 해지
-            observer.unobserve(entry.target);
+      const getList = () => {
+        return fetch('./assets/mock/list.json');
+      };
+
+      const addObserve = () => {
+        const observe = new IntersectionObserver(
+          entries => {
+            entries.forEach(async entry => {
+              const { target, isIntersecting } = entry;
+              const height = target.offsetTop + target.clientHeight;
+              const bodyHeight = document.body.scrollHeight;
+              if (isIntersecting) {
+                if (height >= bodyHeight) {
+                  curPage += 1;
+                  //await callList();
+                }
+              }
+            });
+          },
+          {
+            threshold: 0.1,
           }
+        );
+
+        Array.from($card.children).forEach(item => {
+          observe.observe(item);
         });
       };
-      const observer = new IntersectionObserver(callback, {
-        threshold: 0.1,
-      });
 
-      $cardItem.forEach(item => {
-        observer.observe(item);
+      const createChildEle = text => {
+        const childEle = document.createElement('li');
+        childEle.classList.add('card-item');
+        childEle.textContent = `리스트${text}`;
+        return childEle;
+      };
+
+      const setList = (list = []) => {
+        list.forEach(item => {
+          const { id } = item;
+          const child = createChildEle(id);
+          $card.appendChild(child);
+        });
+        //인터렉션 옵저버 등록
+        addObserve();
+      };
+
+      const callList = async () => {
+        const result = await getList();
+        const data = await result.json();
+        const { list } = data;
+        console.log('curPage : ', curPage);
+        setList(list[curPage - 1]);
+      };
+
+      const initList = async () => {
+        try {
+          await callList();
+
+          const cardHeight = $card.clientHeight;
+          //
+          if (windowHeight > cardHeight) {
+            curPage += 1;
+            await callList();
+          }
+        } catch (error) {
+          console.error('error : ', error);
+        }
+      };
+
+      window.addEventListener('load', () => {
+        initList();
       });
     </script>
   </body>
