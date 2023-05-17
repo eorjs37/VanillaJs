@@ -14,6 +14,8 @@
 
     <script>
       let curPage = 1;
+      let totalData = 0;
+      let totalPage = 0;
       const $card = document.querySelector('.card');
       const windowHeight = window.innerHeight;
 
@@ -29,9 +31,9 @@
               const height = target.offsetTop + target.clientHeight;
               const bodyHeight = document.body.scrollHeight;
               if (isIntersecting) {
-                if (height >= bodyHeight) {
+                if (height >= bodyHeight && curPage <= totalPage) {
                   curPage += 1;
-                  //await callList();
+                  await callList();
                 }
               }
             });
@@ -66,8 +68,9 @@
       const callList = async () => {
         const result = await getList();
         const data = await result.json();
-        const { list } = data;
-        console.log('curPage : ', curPage);
+        const { list, total } = data;
+        totalData = total;
+        totalPage = total / 5;
         setList(list[curPage - 1]);
       };
 
