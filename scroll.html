@@ -17,7 +17,6 @@
       let totalData = 0;
       let totalPage = 0;
       const $card = document.querySelector('.card');
-      const windowHeight = window.innerHeight;
 
       const getList = () => {
         return fetch('./assets/mock/list.json');
@@ -77,13 +76,6 @@
       const initList = async () => {
         try {
           await callList();
-
-          const cardHeight = $card.clientHeight;
-          //
-          if (windowHeight > cardHeight) {
-            curPage += 1;
-            await callList();
-          }
         } catch (error) {
           console.error('error : ', error);
         }
