@@ -1,0 +1,27 @@
+.chat_height{
+    height: 500px;
+    max-width: 300px;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+
+.chat_header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    display: flex;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.chat_body{
+    height: 390px;
+    overflow-y: scroll;
+}
+
+.chat_footer{
+    height: 80px;
+}
