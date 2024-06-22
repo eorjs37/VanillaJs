@@ -16,12 +16,6 @@
             <header class="chat_header bg-info"></header>
             <main class="chat_body">
                 <ul class="chat_list">
-                    <li class="chat_me">
-                        <p class="chat_me_conv">안녕하세요</p>
-                    </li>
-                    <li class="chat_you">
-                        <p class="chat_me_you bg-primary">안녕하세요</p>
-                    </li>
                 </ul>
             </main>
             <footer class="chat_footer">
@@ -79,7 +73,8 @@
 
             itemWrap.appendChild(item);
 
-            chatList.appendChild(itemWrap)
+            chatList.appendChild(itemWrap);
+            scrollBottom();
         }
 
         const makeChatMeItem = txt =>{
@@ -93,6 +88,12 @@
             itemWrap.appendChild(item);
 
             chatList.appendChild(itemWrap)
+            scrollBottom();
+        }
+
+        const scrollBottom = ()=>{
+          const last = chatList.children.length-1;
+          chatList.children[last].scrollIntoView();
         }
 
 
