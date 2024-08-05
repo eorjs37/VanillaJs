@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIDEO</title>
+</head>
+<body>
+    <button id="test">TEST</button>
+    <video id="myVideo" controls autoplay muted>
+        Your browser does not support the video tag.
+    </video>
+    <script>
+        function unMuted(){
+            const video = document.querySelector('#myVideo');
+            video.muted = false;
+        }
+        function playVideo() {
+            var video = document.getElementById('myVideo');
+            video.muted = false;
+            video.play();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            
+            document.querySelector('#test').onclick = function(){
+                console.log(111 )
+                const video = document.querySelector('#myVideo');
+                video.src = './assets/video/2.mp4';
+                var autoplayVideoInterval = setInterval(autoplayVideo,200);
+            }
+            document.querySelector('#test').click();
+        });
+
+        function endedVideo(){
+            console.log("ended video")
+            const video = document.querySelector('#myVideo');
+            video.src = './assets/video/2.mp4';
+            var autoplayVideoInterval = setInterval(autoplayVideo,200);
+            
+            var promise =video.play(); 
+            if (promise !== undefined) {
+                promise.then(_ => {
+                  // Autoplay started!
+                }).catch(error => {
+                  // Autoplay was prevented.
+                  // Show a "Play" button so that user can start playback.
+                });
+            }
+        }
+
+        function autoplayVideo(){
+            const video = document.querySelector('#myVideo');
+            var promise =video.play(); 
+            if (promise !== undefined) {
+                promise.then(_ => {
+                  // Autoplay started!
+                  video.volume = 0.5;
+                  video.muted = false;
+                }).catch(error => {
+                  console.log(error)
+                  // Autoplay was prevented.
+                  // Show a "Play" button so that user can start playback.
+                });
+            }
+        }
+
+        
+
+        function retryVideo(n = 0){
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    if(n < 200){
+                        console.log("시도 횟수 : ",n)
+                        const video = document.getElementById('myVideo');
+                        video.play()
+                        .then(()=>{
+                            resolve('success')
+                        })
+                        .catch(err=>{
+                            console.error(`${n}번째 video retry error : `,err)
+                            retryVideo(n+1);
+                        })
+                    }else{
+                        reject(new Error('fail video'))
+                    }
+                },200)
+                
+            })
+        }   
+
+
+    </script>
+</body>
+</html>
