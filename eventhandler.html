@@ -8,13 +8,11 @@
     <link rel="stylesheet" href="./styles/eventhandler.css">
 </head>
 <body>
-    <div class="container">
-        <div class="box"></div>
-    </div>
+     <div class="box"></div>
     <script>
-        const transitionEnd = (e) =>{       
+        const transitionEnd = (e) =>{
             const { target,propertyName } = e;
-            const { clientHeight } = target;    
+            const { clientHeight } = target;
             if(propertyName === 'height' ){
                 if(clientHeight > 300){
                     target.classList.add('active');
@@ -22,7 +20,7 @@
                     target.classList.remove('active');
                 }
             }
-            
+
         }
 
         const box = document.querySelector('.box');
