@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<iframe src="/assets/video/silence.mp3" allow="autoplay" id="audio"  style="display:none"></iframe>
+	<video id="video1" autoplay controls>
+		<source src="/assets/video/2.mp4">
+	</video>
+
+	<script>
+
+		let interval = null;
+		function autoplayVideo(){
+			const video = document.querySelector('#video1')
+			const promise = document.querySelector('#video1').play();
+			if(promise !== undefined){
+				promise.then(()=>{
+					console.log("success");
+					video.muted = false;
+					video.volume = 0.8
+					//clearInterval(interval)
+				})
+				.catch((error)=>{
+					console.log("error : ",error);
+
+					//window.location.reload();
+				})
+			}
+		}
+
+		window.addEventListener('DOMContentLoaded',()=>{
+			autoplayVideo();
+		})
+	</script>
+</body>
+</html>
