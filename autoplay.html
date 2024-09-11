@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-	<iframe src="/assets/video/silence.mp3" allow="autoplay" id="audio"  style="display:none"></iframe>
-	<video id="video1" autoplay controls>
-		<source src="/assets/video/2.mp4">
-	</video>
+    <button onclick="btn()">모달오픈</button>
+    <video src="/assets/video/2.mp4" autoplay  controls></video>
+    <script>
+        const btn = ()=>{
+            document.querySelector('video').play();
+        }
 
-	<script>
+        setTimeout(()=>{
+            document.querySelector('video').pause();
+            document.querySelector('video').src = ''
+        },10 * 1000)
 
-		let interval = null;
-		function autoplayVideo(){
-			const video = document.querySelector('#video1')
-			const promise = document.querySelector('#video1').play();
-			if(promise !== undefined){
-				promise.then(()=>{
-					console.log("success");
-					video.muted = false;
-					video.volume = 0.8
-					//clearInterval(interval)
-				})
-				.catch((error)=>{
-					console.log("error : ",error);
-
-					//window.location.reload();
-				})
-			}
-		}
-
-		window.addEventListener('DOMContentLoaded',()=>{
-			autoplayVideo();
-		})
-	</script>
+        setTimeout(()=>{
+            document.querySelector('video').src = '/assets/video/2.mp4'
+            document.querySelector('video').play();
+        },20 * 1000)
+    </script>
 </body>
 </html>
