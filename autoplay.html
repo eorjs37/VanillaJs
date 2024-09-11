@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+    <button onclick="btn()">모달오픈</button>
+    <video src="/assets/video/2.mp4" autoplay  controls></video>
+    <script>
+        const btn = ()=>{
+            document.querySelector('video').play();
+        }
+
+        setTimeout(()=>{
+            document.querySelector('video').pause();
+            document.querySelector('video').src = ''
+        },10 * 1000)
+
+        setTimeout(()=>{
+            document.querySelector('video').src = '/assets/video/2.mp4'
+            document.querySelector('video').play();
+        },20 * 1000)
+    </script>
+</body>
+</html>
